@@ -1,3 +1,8 @@
+/**
+ * This factory function is resposible for creation of the tic tac toe board
+ * keeping track of what markers are placed and where as well as printing the board
+ * @returns getBoard, printBoard, placeMarker
+ */
 function GameBoard(){
     const row = 3;
     const col = 3;
@@ -17,6 +22,18 @@ function GameBoard(){
     console.log(boardPositions);
 
     const getBoard = () => board;
+    //checks if the cell is valid for placing a marker
+    const isCellEmpty = (position) => {
+        const row = boardPositions[position][0];
+        const col = boardPositions[position][1];
+        if(board[row][col].getMarker() === ""){
+            return true;
+        } else{
+            const marker = board[row][col].getMarker();
+            console.log(`Cell ${position} is occupied by ${marker}. Try again!`);
+            return false;
+        }
+    }
 
     const printBoard = () => {
         //below is equivalent to having two nested for loops on rows and cols and assigning marker to each cell
@@ -24,18 +41,11 @@ function GameBoard(){
         console.log(boardwithValues);
     };
 
-    const placeMarker = (pos, player) => {
-        //check if cell is empty before placing the marker
-        // const cell = boardPositions[pos];
-        // console.log(cell);
-        const row = boardPositions[pos][0];
-        const col = boardPositions[pos][1];
-        if (board[row][col].getMarker() === ""){
+    const placeMarker = (position, player) => {
+        const row = boardPositions[position][0];
+        const col = boardPositions[position][1];
+        if (isCellEmpty(position)){
             board[row][col].addMarker(player);
-        }
-        else{
-
-            console.log(`Cell ${pos} is occupied`);
         }
     };
 
@@ -43,9 +53,13 @@ function GameBoard(){
         getBoard,
         printBoard,
         placeMarker,
+        isCellEmpty,
     };
 }
-
+/**
+ * TBD
+ * @returns addMarker, getMarker
+ */
 function Cell(){
     //this represents the a specific cell in the board
     // initially, the cell will have empty marker
@@ -61,9 +75,54 @@ function Cell(){
         getMarker,
     }
 }
+/**
+ * 
+ * @returns 
+ */
+function GameController(){
+    let firstPlayer = "PlayerOne";
+    let SecondPlayer = "PlayerTwo";
+    const board = GameBoard();
+    const players = [
+        {
+            name: firstPlayer,
+            marker: "X"
+        },
+        {
+            name: SecondPlayer,
+            marker: "O"
+        },
 
-const game = GameBoard();
-// game.printBoard();
-// game.placeMarker(3, "X");
-// game.printBoard();
-// game.placeMarker(3, "X");
+    ];
+    let activePlayer = players[0];
+
+    const switchTurns = () => activePlayer = activePlayer === players[0]? players[1]:players[0];
+    const getActivePlayer = () => activePlayer;
+    const playNewRound = () => {
+        board.printBoard()
+        console.log(`it's ${getActivePlayer().name}'s turn`);
+    }
+    const playRound = (position) => {
+        console.log(`Dropping ${getActivePlayer().marker} at position ${position}`)
+        // prevents switching turns if cell is occupied
+        if(!board.isCellEmpty(position)){
+            playNewRound();
+            return
+        };
+
+        board.placeMarker(position, getActivePlayer().marker);
+        //TODO: determine winner
+
+        switchTurns()
+        playNewRound();
+    }
+    // initial start of the game
+    playNewRound();
+    return{
+        playRound,
+        getActivePlayer,
+    }
+}
+
+const game = GameController();
+
