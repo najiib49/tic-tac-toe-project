@@ -44,9 +44,62 @@ function GameBoard(){
     const placeMarker = (position, player) => {
         const row = boardPositions[position][0];
         const col = boardPositions[position][1];
-        if (isCellEmpty(position)){
+        if(isCellEmpty(position)){
             board[row][col].addMarker(player);
         }
+    };
+    
+    const verticalWin = (player) =>{     
+        /**
+         * iterate through each column and check to see if all three rows of that column 
+         * have the same player marker
+        */
+       for(let i=0; i<3; i++){
+            if(board[0][i].getMarker()===player
+            && board[1][i].getMarker()===player
+            && board[2][i].getMarker()===player){
+                return true;
+            }
+        }
+        return false
+    };
+    const horizontalWin = (player) =>{
+        /**
+         * iterate through each row and check if all three columns of that row
+         * have the same player marker
+         */
+        for(let i=0; i<3; i++){
+            if(board[i][0].getMarker()===player
+            && board[i][1].getMarker()===player
+            && board[i][2].getMarker()===player){
+                return true;
+            }
+        }
+        return false;
+    };
+    const diagonalWin = (player) =>{
+        /**
+         * check if all either diagonals contain that same player marker 
+         */
+        if(board[0][0].getMarker() === player
+        && board[1][1].getMarker() === player
+        && board[2][2].getMarker() === player){
+            return true;
+        }
+        if(board[0][2].getMarker() ===player
+        && board[1][1].getMarker()===player 
+        && board[2][0].getMarker()===player){
+            return true;
+        }
+        return false;
+    };
+
+    const checkWin = (player) => {
+        if(verticalWin(player)){ console.log("Vertical win");return true; }
+        if(horizontalWin(player)){console.log("Horizontal win");return true; }
+        if(diagonalWin(player)){console.log("Diagonal win");return true; }
+        
+        return false;
     };
 
     return{
@@ -54,6 +107,7 @@ function GameBoard(){
         printBoard,
         placeMarker,
         isCellEmpty,
+        checkWin,
     };
 }
 /**
@@ -86,11 +140,13 @@ function GameController(){
     const players = [
         {
             name: firstPlayer,
-            marker: "X"
+            marker: "X",
+            pieceCount: 0
         },
         {
             name: SecondPlayer,
-            marker: "O"
+            marker: "O",
+            pieceCount: 0
         },
 
     ];
@@ -108,10 +164,19 @@ function GameController(){
         if(!board.isCellEmpty(position)){
             playNewRound();
             return
-        };
+        }
 
         board.placeMarker(position, getActivePlayer().marker);
-        //TODO: determine winner
+        getActivePlayer().pieceCount += 1;
+        
+        //determine winner after each players third piece
+        if(getActivePlayer().pieceCount >=3){
+            if(board.checkWin(getActivePlayer().marker)){
+                board.printBoard();
+                console.log(`${getActivePlayer().marker} has won the game`);
+                return
+            }
+        }
 
         switchTurns()
         playNewRound();
