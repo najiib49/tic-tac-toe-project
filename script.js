@@ -174,8 +174,13 @@ function GameController(){
             if(board.checkWin(getActivePlayer().marker)){
                 board.printBoard();
                 console.log(`${getActivePlayer().marker} has won the game`);
-                return
+                return;
             }
+        }
+        if (getActivePlayer().pieceCount === 5){
+            board.printBoard();
+            console.log('X and O Draws');
+            return;
         }
 
         switchTurns()
