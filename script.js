@@ -151,9 +151,13 @@ function GameController(){
 
     ];
     let activePlayer = players[0];
+    let winner = ""; // stops the game if there's a winner
+    let draw = false;
 
     const switchTurns = () => activePlayer = activePlayer === players[0]? players[1]:players[0];
     const getActivePlayer = () => activePlayer;
+    const getWinner = () => winner;
+    const getDraw = () => draw;
     const playNewRound = () => {
         board.printBoard()
         console.log(`it's ${getActivePlayer().name}'s turn`);
@@ -165,21 +169,24 @@ function GameController(){
             playNewRound();
             return
         }
-
-        board.placeMarker(position, getActivePlayer().marker);
-        getActivePlayer().pieceCount += 1;
+        if (!winner){
+            board.placeMarker(position, getActivePlayer().marker);
+            getActivePlayer().pieceCount += 1;
+        }
         
         //determine winner after each players third piece
         if(getActivePlayer().pieceCount >=3){
             if(board.checkWin(getActivePlayer().marker)){
                 board.printBoard();
                 console.log(`${getActivePlayer().marker} has won the game`);
+                winner = getActivePlayer();
                 return;
             }
         }
         if (getActivePlayer().pieceCount === 5){
             board.printBoard();
             console.log('X and O Draws');
+            draw = true;
             return;
         }
 
@@ -192,6 +199,8 @@ function GameController(){
         playRound,
         getActivePlayer,
         getBoard : board.getBoard,
+        getWinner,
+        getDraw,
     }
 }
 // const game = GameController();
@@ -222,10 +231,17 @@ function DisplayController(){
          // this is hidden till game ends
         let resultDisplay = document.getElementById('result');
 
-        currentPlayerDiv.textContent = `Current Player: ${game.getActivePlayer().name}`;
+        currentPlayerDiv.textContent = `Current Player: ${game.getActivePlayer().marker}`;
         resultDisplay.style.display = 'none';
-        //TODO show result if the game ends, i.e. winner, draw or loss
 
+        if(game.getWinner()){
+            resultDisplay.style.display = 'block';
+            resultDisplay.textContent = `Game winner is ${game.getWinner().marker}`;
+        } else if (game.getDraw()){
+            resultDisplay.style.display = 'block';
+            resultDisplay.textContent = `Game ends in Draw`;
+        }
+        
         renderBoard();
 
     }
