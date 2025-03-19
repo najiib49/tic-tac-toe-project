@@ -205,8 +205,9 @@ function GameController(){
 }
 // const game = GameController();
 function DisplayController(){
-    const game = GameController();
+    let game = GameController();
     const boardDiv = document.querySelector('.board');
+    const resetBtn = document.getElementById('reset');
 
     const renderBoard = () => {
         const board = game.getBoard();
@@ -241,7 +242,7 @@ function DisplayController(){
             resultDisplay.style.display = 'block';
             resultDisplay.textContent = `Game ends in Draw`;
         }
-        
+
         renderBoard();
 
     }
@@ -254,7 +255,12 @@ function DisplayController(){
         game.playRound(markerPos);
         updateScreen();    
     }
+    function reset(e){
+        game = GameController();
+        updateScreen();
+    }
     boardDiv.addEventListener('click', addMarker);
+    resetBtn.addEventListener('click', reset)
     updateScreen();
 }
 
