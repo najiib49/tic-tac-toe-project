@@ -15,7 +15,6 @@ function GameBoard(){
         board[i] = [];
         for(let j=0; j<col; j++){
             board[i].push(Cell());
-            board[i][j].addMarker("X");
             boardPositions[position] = [i,j];
             position++;
         }
@@ -216,6 +215,8 @@ function DisplayController(){
     }
 
     const updateScreen = () => {
+        //clear board content
+        boardDiv.textContent = '';
         //displays current player the winner/if draw and the board.
         let currentPlayerDiv = document.getElementById("curr-player");
          // this is hidden till game ends
@@ -228,6 +229,16 @@ function DisplayController(){
         renderBoard();
 
     }
+    //allows players to place their marker on a specific spot
+    function addMarker(e){
+        const markerPos = e.target.dataset.position;
+        console.log(markerPos);
+        //prevents playing a round when a player clicks empty spaces in the board instead of the cells
+        if(!markerPos){return;}
+        game.playRound(markerPos);
+        updateScreen();    
+    }
+    boardDiv.addEventListener('click', addMarker);
     updateScreen();
 }
 
