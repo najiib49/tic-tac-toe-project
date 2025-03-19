@@ -15,6 +15,7 @@ function GameBoard(){
         board[i] = [];
         for(let j=0; j<col; j++){
             board[i].push(Cell());
+            board[i][j].addMarker("X");
             boardPositions[position] = [i,j];
             position++;
         }
@@ -191,8 +192,43 @@ function GameController(){
     return{
         playRound,
         getActivePlayer,
+        getBoard : board.getBoard,
     }
 }
+// const game = GameController();
+function DisplayController(){
+    const game = GameController();
+    const boardDiv = document.querySelector('.board');
 
-const game = GameController();
+    const renderBoard = () => {
+        const board = game.getBoard();
+        let pos = 1;
+        board.forEach(row =>{
+            row.forEach(cell =>{
+                const cellButton = document.createElement('button');
+                cellButton.classList.add('cell');
+                cellButton.dataset.position = pos;
+                cellButton.textContent = cell.getMarker();
+                pos++;   
+                boardDiv.appendChild(cellButton)
+            })
+        })
+    }
 
+    const updateScreen = () => {
+        //displays current player the winner/if draw and the board.
+        let currentPlayerDiv = document.getElementById("curr-player");
+         // this is hidden till game ends
+        let resultDisplay = document.getElementById('result');
+
+        currentPlayerDiv.textContent = `Current Player: ${game.getActivePlayer().name}`;
+        resultDisplay.style.display = 'none';
+        //TODO show result if the game ends, i.e. winner, draw or loss
+
+        renderBoard();
+
+    }
+    updateScreen();
+}
+
+DisplayController();
