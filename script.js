@@ -237,7 +237,7 @@ function DisplayController(){
 
         if(game.getWinner()){
             resultDisplay.style.display = 'block';
-            resultDisplay.textContent = `Game winner is ${game.getWinner().marker}`;
+            resultDisplay.textContent = `Game winner: ${game.getWinner().marker}`;
         } else if (game.getDraw()){
             resultDisplay.style.display = 'block';
             resultDisplay.textContent = `Game ends in Draw`;
