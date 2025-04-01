@@ -1,6 +1,6 @@
 /**
  * This factory function is resposible for creation of the tic tac toe board
- * keeping track of what markers are placed and where as well as printing the board
+ * keeping track of what marks are placed and where as well as printing the board
  * @returns getBoard, printBoard, placeMarker
  */
 function GameBoard(){
@@ -111,7 +111,7 @@ function GameBoard(){
     };
 }
 /**
- * This is responsible for placing and getting markers for a single cell in the board.
+ * This is responsible for placing and getting X or O marks for a single cell in the board.
  * @returns addMarker, getMarker
  */
 function Cell(){
@@ -220,7 +220,7 @@ function DisplayController(){
                 cellButton.classList.add('cell');
                 cellButton.dataset.position = pos;
                 // cellButton.textContent = cell.getMarker();
-                //renders svg markers on the board
+                //renders svg marks on the board
                 if (cell.getMarker() === 'X'){
                     cellButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 384 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#273e47" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`;
                 } else if (cell.getMarker() === 'O'){

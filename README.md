@@ -22,9 +22,9 @@ The game consists of three main components:
 
 - Gameboard: Stores the board as an array and manages updates.
 
-- Cell factory: Manages placing and getting markers.
+- Cell factory: Manages placing and getting (X or O) marks.
 
-- Game Controller: Handles the creation of plyer object and game logic, including turns, checking for wins, and managing player interactions.
+- Game Controller: Handles the creation of player object and game logic, including turns, checking for wins, and managing player interactions.
 
 - Display Controller: Manages the user interface and updates the DOM.
 
