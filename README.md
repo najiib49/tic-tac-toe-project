@@ -4,6 +4,9 @@
 
 Tic Tac Toe is a classic game that we have brought to the web! This project allows players to enjoy a seamless, interactive Tic Tac Toe experience in their browser. The game is built using HTML, CSS, and JavaScript, following best practices in modular code organization.
 
+## Live Demo  
+Play the game here: [Tic Tac Toe](https://najiib49.github.io/tic-tac-toe-project/)
+
 ## Features
 
 - Interactive gameboard displayed in the browser
