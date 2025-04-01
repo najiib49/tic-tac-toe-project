@@ -20,7 +20,7 @@ Tic Tac Toe is a classic game that we have brought to the web! This project allo
 
 The game consists of three main components:
 
-- Gameboard Module: Stores the board as an array and manages updates.
+- Gameboard: Stores the board as an array and manages updates.
 
 - Cell factory: Manages placing and getting markers.
 
