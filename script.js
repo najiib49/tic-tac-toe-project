@@ -111,7 +111,7 @@ function GameBoard(){
     };
 }
 /**
- * TBD
+ * This is responsible for placing and getting markers for a single cell in the board.
  * @returns addMarker, getMarker
  */
 function Cell(){
@@ -130,8 +130,8 @@ function Cell(){
     }
 }
 /**
- * 
- * @returns 
+ * This factory function handles creation of player object and the creation of game logic, including swithing turns, checking for wins and keeping track of the active player. 
+ * @returns playRound, getActivePlayer, getBoard, getWinner, getDraw,
  */
 function GameController(){
     let firstPlayer = "PlayerOne";
@@ -203,7 +203,9 @@ function GameController(){
         getDraw,
     }
 }
-// const game = GameController();
+/**
+ * This is responsible for the hanling User interface and updating the DOM.
+ */
 function DisplayController(){
     let game = GameController();
     const boardDiv = document.querySelector('.board');
